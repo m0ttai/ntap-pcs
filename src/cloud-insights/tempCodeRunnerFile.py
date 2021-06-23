@@ -1,14 +1,18 @@
-def conv_epochtime(date):
-	date_time = datetime.datetime.strptime(date, '%Y%m%d')
-	date_time = date_time.astimezone(datetime.timezone(datetime.timedelta(hours=-9)))
-	epochtime = int(time.mktime(date_time.timetuple()) * 1000)
-	return epochtime
+import datetime, time, calendar
+from dateutil.relativedelta import relativedelta
 
-### S3 オブジェクト情報取得 ###
-s3 = boto3.resource('s3')
-bucket = s3.Bucket(upload_bucket)
+def get_search_time(date):
+	last = date - relativedelta(months=1)
+	begin_date = datetime.datetime(last.year, last.month, 1)
+	begin_date = int(time.mktime(begin_date.timetuple()) * 1000)
+	end_date = datetime.datetime(date.year, date.month, 1)
+	end_date = int(time.mktime(end_date.timetuple()) * 1000)
+	### 月末日の取得 ###
+	# last_end_date = datetime.datetime(last.year, last.month, calendar.monthrange(last.year, last.month)[1])
+	# last_end_date = int(time.mktime(last_end_date.timetuple()) * 1000)
+	return begin_date, end_date
 
-### Get Request クエリストリング & ヘッダ 定義 ###
-from_epochtime = conv_epochtime(from_date)
-to_epochtime = conv_epochtime(to_date)
-print("epochtime: " + from_epochtime)
+today = datetime.datetime.utcnow()
+begin_date, end_date = get_search_time(today)
+print(begin_date)
+print(end_date)
