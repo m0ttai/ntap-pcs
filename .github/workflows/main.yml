@@ -53,10 +53,11 @@ jobs:
           CLOUD_SECURE_URL: ${{ secrets.NETAPP_CLOUD_SECURE_URL }}
           CLOUD_SECURE_TOKEN: ${{ secrets.NETAPP_CLOUD_SECURE_TOKEN }}
           GET_DEVICE_NAME: ${{ secrets.NETAPP_DEVICE_NAME }}
+          SES_RECIPIENT_ADDRESS: ${{ secrets.AWS_SES_RECIPIENT_ADDRESS }}
           LAMBDA_FUNCTION_NAME: ${{ secrets.AWS_LAMBDA_FUNCTION_NAME }}
           # AWS_IAM_ROLE_ARN: ${{ secrets.AWS_IAM_ROLE_ARN }}
         run: |
           # aws lambda create-function --function-name ci-lambda-func --package-type Image --code ImageUri=$ECR_REGISTRY/$ECR_REPOSITORY@$(docker images --digests | grep $ECR_REGISTRY/$ECR_REPOSITORY | grep $IMAGE_TAG | awk '{print $3}') --role $AWS_IAM_ROLE_ARN
           aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           sleep 60
-          aws lambda update-function-configuration --function-name $LAMBDA_FUNCTION_NAME --environment "Variables={CLOUD_SECURE_URL=$CLOUD_SECURE_URL,CLOUD_SECURE_TOKEN=$CLOUD_SECURE_TOKEN,GET_DEVICE_NAME=$GET_DEVICE_NAME}" --timeout 10
+          aws lambda update-function-configuration --function-name $LAMBDA_FUNCTION_NAME --environment "Variables={CLOUD_SECURE_URL=$CLOUD_SECURE_URL,CLOUD_SECURE_TOKEN=$CLOUD_SECURE_TOKEN,GET_DEVICE_NAME=$GET_DEVICE_NAME,SES_RECIPIENT_ADDRESS=$SES_RECIPIENT_ADDRESS}" --timeout 10
