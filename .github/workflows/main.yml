@@ -44,11 +44,11 @@ jobs:
           # Python構文エラーまたは未定義の名前がある場合はエラーとする
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # Exit 0 は全てのエラーを警告として扱う
-          # flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Test with pytest
         run: |
-          pytest src/cloud-insights/
+          pytest
         
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
