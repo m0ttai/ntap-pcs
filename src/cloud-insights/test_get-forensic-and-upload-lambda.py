@@ -10,4 +10,5 @@
 # print(attachment)
 
 out = 'pytest clear'
-assert out == 'pytest clear'
+def test_matching():
+	assert out == 'pytest clear'
