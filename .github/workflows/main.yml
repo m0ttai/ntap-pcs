@@ -61,3 +61,5 @@ jobs:
           aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           sleep 60
           aws lambda update-function-configuration --function-name $LAMBDA_FUNCTION_NAME --environment "Variables={CLOUD_SECURE_URL=$CLOUD_SECURE_URL,CLOUD_SECURE_TOKEN=$CLOUD_SECURE_TOKEN,GET_DEVICE_NAME=$GET_DEVICE_NAME,SES_RECIPIENT_ADDRESS=$SES_RECIPIENT_ADDRESS}" --timeout 10
+
+# aaa
